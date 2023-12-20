@@ -23,4 +23,5 @@ int main()
         }
         printf("AFTER EXECUTION");
     }
+    return (0);
 }
