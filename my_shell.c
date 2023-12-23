@@ -3,7 +3,7 @@ int main()
 {
 	size_t n = 0;
 	pid_t child_pid;
-	int iread, status;
+	int iread, status, counter = 0;
    char *buffer = NULL, *token, *delim = " ", *argv[1024];
 	while (1)
 	{
@@ -12,32 +12,35 @@ int main()
 		iread = getline(&buffer, &n, stdin);
 		if (iread == -1)
 			perror("Error:");
-		argv[0] = token;
 		token = strtok(buffer, delim);
 		while (token)
 		{
-			printf("%s\n", token);
+			argv[counter] = token;
+			counter++;
 			token = strtok(NULL, delim);
-			child_pid = fork();
+		}
+		argv[counter] = NULL;
+		printf("ARG[0] = %s\n", argv[0]);
+		printf("COUNTER = %d\n", counter);
+		printf("token before forking%s\n", token);
+		child_pid = fork();
 		if (child_pid == -1)
 		{
 			perror("ERROR");
 			return (1);
 		}
 		if (child_pid == 0)
+		{
+			printf("executing\n");
+			if (execve("/usr/bin/ls", argv, __environ) == -1)
+				perror("ERROR");
 			printf("I am the child, father wait for me\n");
+		}
 		else
 		{ 
+			printf("waiting");
 			wait(&status);
-			printf("I am the father\n");
 		}
-		if (execve(argv[0], argv, NULL) == -1 )
-		{
-		 perror("Error:");   
-		}
-		printf("AFTER EXECUTION\n");
-		}
-		printf("BEFORE EXECUTION & FORKING\n");
 	}
 	return (0);
 }
