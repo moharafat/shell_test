@@ -11,7 +11,8 @@
 #include <string.h>
 
 
-int my_prompt(char * buffer);
+int my_prompt(char **buffer);
+int my_strtok(char *buffer, char** argv);
 
 
 #endif

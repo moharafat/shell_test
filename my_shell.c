@@ -1,35 +1,23 @@
 #include "shell.h"
 int main()
 {
-
 	pid_t child_pid;
-	int status, counter = 0;
-	char *buffer = NULL, *token, *delim = " \n";
+	int status;
+	char *buffer = NULL;
 	char *argv[1024];
+
 	while (1)
 	{
-		my_prompt(buffer);
-		
-		token = strtok(buffer, delim);
-		counter = 0;
-		while (token)
-		{
-			argv[counter] = token;
-			counter++;
-			token = strtok(NULL, delim);
-
-		}
-		argv[counter] = NULL;
+		my_prompt(&buffer);
+		printf("BUFFER IS: %s", buffer);
+		my_strtok(buffer, argv);
 		printf("ARG[0] = %s\n", argv[0]);
-		printf("COUNTER = %d\n", counter);
-		printf("token before forking%s\n", token);
 		if (strcmp (argv[0], "exit") == 0)
 			{
 				printf("about to exit\n");
 				break;
 			}
 		child_pid = fork();
-
 		if (child_pid == -1)
 		{
 			perror("ERROR");
