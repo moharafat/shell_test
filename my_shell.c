@@ -12,11 +12,9 @@ int main()
 		printf("BUFFER IS: %s", buffer);
 		my_strtok(buffer, argv);
 		printf("ARG[0] = %s\n", argv[0]);
-		if (strcmp (argv[0], "exit") == 0)
-			{
-				printf("about to exit\n");
-				break;
-			}
+	
+		my_exit(argv);
+		
 		child_pid = fork();
 		if (child_pid == -1)
 		{

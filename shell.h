@@ -13,6 +13,7 @@
 
 int my_prompt(char **buffer);
 int my_strtok(char *buffer, char** argv);
+int my_exit(char **argv);
 
 
 #endif
